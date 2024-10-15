@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <title>AIBoB - 让每个人都享受AI的乐趣</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/css/mdui.min.css">
+    <style>
+        .waterfall {
+            column-count: 3;
+            column-gap: 20px;
+        }
+        @media (max-width: 1199px) {
+            .waterfall {
+                column-count: 2;
+            }
+        }
+        @media (max-width: 767px) {
+            .waterfall {
+                column-count: 1;
+            }
+        }
+        .mdui-card {
+            break-inside: avoid;
+            margin-bottom: 20px;
+        }
+        .mdui-card-header {
+            height: auto;
+        }
+        .mdui-card-header-title {
+            font-size: 24px;
+            line-height: 36px;
+        }
+        .mdui-card-content {
+            padding-top: 0;
+        }
+    </style>
+</head>
+<body class="mdui-drawer-body-left mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink">
+    <header class="mdui-appbar mdui-appbar-fixed">
+        <div class="mdui-toolbar mdui-color-theme">
+            <span class="mdui-btn mdui-btn-icon mdui-ripple mdui-ripple-white" mdui-drawer="{target: '#main-drawer', swipe: true}">
+                <i class="mdui-icon material-icons">menu</i>
+            </span>
+            <a href="javascript:;" class="mdui-typo-headline">AIBoB</a>
+            <div class="mdui-toolbar-spacer"></div>
+            <button class="mdui-btn mdui-btn-icon" id="theme-toggle">
+                <i class="mdui-icon material-icons">brightness_4</i>
+            </button>
+        </div>
+    </header>
+
+    <div class="mdui-drawer" id="main-drawer">
+        <ul class="mdui-list">
+            <li class="mdui-list-item mdui-ripple">
+                <i class="mdui-list-item-icon mdui-icon material-icons">home</i>
+                <div class="mdui-list-item-content">首页</div>
+            </li>
+            <li class="mdui-list-item mdui-ripple">
+                <i class="mdui-list-item-icon mdui-icon material-icons">school</i>
+                <div class="mdui-list-item-content">学习资源</div>
+            </li>
+            <li class="mdui-list-item mdui-ripple">
+                <i class="mdui-list-item-icon mdui-icon material-icons">chat</i>
+                <div class="mdui-list-item-content">AI 聊天</div>
+            </li>
+            <li class="mdui-list-item mdui-ripple">
+                <i class="mdui-list-item-icon mdui-icon material-icons">info</i>
+                <div class="mdui-list-item-content">关于我们</div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="mdui-container mdui-typo mdui-p-t-5 mdui-p-b-4">
+        <h1 class="mdui-text-center mdui-m-t-5 mdui-m-b-4">让每个人都享受AI的乐趣 / 代码改变世界</h1>
+        <div class="waterfall">
+            <div class="mdui-card">
+                <div class="mdui-card-header">
+                    <div class="mdui-card-header-title">AIBoB官方AI</div>
+                </div>
+                <div class="mdui-card-content">
+                    <ul class="mdui-list">
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://chat.aibob.top/" target="_blank" class="mdui-list-item-content">BoB / 您的多模态智能机器人</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://c.aibob.top/" target="_blank" class="mdui-list-item-content">BoBDev / AIBoB开发者平台</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 其他卡片内容保持不变 -->
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/js/mdui.min.js"></script>
+    <script>
+        // 初始化MDUI组件
+        mdui.mutation();
+
+        // 主题切换功能
+        var body = document.body;
+        var themeToggle = document.getElementById('theme-toggle');
+        var isDark = false;
+
+        function toggleDarkMode() {
+            isDark = !isDark;
+            if (isDark) {
+                body.classList.add('mdui-theme-layout-dark');
+                themeToggle.innerHTML = '<i class="mdui-icon material-icons">brightness_7</i>';
+            } else {
+                body.classList.remove('mdui-theme-layout-dark');
+                themeToggle.innerHTML = '<i class="mdui-icon material-icons">brightness_4</i>';
+            }
+            // 保存主题设置到本地存储
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        // 检查并应用保存的主题设置
+        if (localStorage.getItem('darkMode') === 'true') {
+            toggleDarkMode();
+        }
+
+        themeToggle.addEventListener('click', toggleDarkMode);
+    </script>
+</body>
+</html>
