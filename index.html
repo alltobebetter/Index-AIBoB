@@ -4,28 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <title>我的MDUI网页</title>
+    <title>AIBoB - 让每个人都享受AI的乐趣</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/css/mdui.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
     <style>
-        .content-container {
-            padding-top: 76px;
-            transition: margin-left 0.3s ease;
+        .waterfall {
+            column-count: 3;
+            column-gap: 20px;
         }
-        @media (min-width: 1024px) {
-            .mdui-drawer-open + .mdui-container {
-                margin-left: 240px;
+        @media (max-width: 1199px) {
+            .waterfall {
+                column-count: 2;
             }
+        }
+        @media (max-width: 767px) {
+            .waterfall {
+                column-count: 1;
+            }
+        }
+        .mdui-card {
+            break-inside: avoid;
+            margin-bottom: 20px;
+        }
+        .mdui-card-header {
+            height: auto;
+        }
+        .mdui-card-header-title {
+            font-size: 24px;
+            line-height: 36px;
+        }
+        .mdui-card-content {
+            padding-top: 0;
         }
     </style>
 </head>
-<body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
+<body class="mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink">
     <header class="mdui-appbar mdui-appbar-fixed">
-        <div class="mdui-toolbar mdui-color-theme">
+        <div class="mdui-toolbar mdui-color-white">
             <span class="mdui-btn mdui-btn-icon mdui-ripple" mdui-drawer="{target: '#main-drawer', swipe: true}">
                 <i class="mdui-icon material-icons">menu</i>
             </span>
-            <a href="javascript:;" class="mdui-typo-headline">我的MDUI网页</a>
+            <a href="javascript:;" class="mdui-typo-headline">AIBoB / 让每个人享受到AI的乐趣</a>
             <div class="mdui-toolbar-spacer"></div>
             <button class="mdui-btn mdui-btn-icon" id="theme-toggle">
                 <i class="mdui-icon material-icons">brightness_4</i>
@@ -35,31 +53,31 @@
 
     <div class="mdui-drawer mdui-drawer-close" id="main-drawer">
         <ul class="mdui-list">
-            <a href="javascript:;" onclick="loadContent('home')">
+            <a href="index.html">
                 <li class="mdui-list-item mdui-ripple">
                     <i class="mdui-list-item-icon mdui-icon material-icons">home</i>
                     <div class="mdui-list-item-content">首页</div>
                 </li>
             </a>
-            <a href="https://py.aibob.top/" target="_blank">
+            <a href="https://py.aibob.top/">
                 <li class="mdui-list-item mdui-ripple">
                     <i class="mdui-list-item-icon mdui-icon material-icons">school</i>
                     <div class="mdui-list-item-content">Python学习</div>
                 </li>
             </a>
-            <a href="https://hcbbs.eu.org/" target="_blank">
+            <a href="https://hcbbs.eu.org/">
                 <li class="mdui-list-item mdui-ripple">
                     <i class="mdui-list-item-icon mdui-icon material-icons">chat</i>
                     <div class="mdui-list-item-content">HcBBs 论坛</div>
                 </li>
             </a>
-            <a href="javascript:;" onclick="loadContent('privacy')">
+            <a href="https://www.aibob.top/pages/privacy-policy.html">
                 <li class="mdui-list-item mdui-ripple">
                     <i class="mdui-list-item-icon mdui-icon material-icons">info</i>
                     <div class="mdui-list-item-content">隐私政策</div>
                 </li>
             </a>
-            <a href="javascript:;" onclick="loadContent('disclaimer')">
+            <a href="https://www.aibob.top/pages/disclaimer.html">
                 <li class="mdui-list-item mdui-ripple">
                     <i class="mdui-list-item-icon mdui-icon material-icons">import_contacts</i>
                     <div class="mdui-list-item-content">免责声明</div>
@@ -68,13 +86,116 @@
         </ul>
     </div>
 
-    <div class="mdui-container content-container">
-        <div class="mdui-card">
-            <div class="mdui-card-primary">
-                <div class="mdui-card-primary-title" id="content-title">欢迎</div>
+    <div class="mdui-container mdui-typo mdui-p-t-5 mdui-p-b-4">
+        <div class="waterfall">
+            <div class="mdui-card">
+                <div class="mdui-card-header">
+                    <div class="mdui-card-header-title">AIBoB官方AI</div>
+                </div>
+                <div class="mdui-card-content">
+                    <ul class="mdui-list">
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://chat.aibob.top/" target="_blank" class="mdui-list-item-content">BoB / 您的多模态智能机器人 / 识图，传文件，画图，写代码</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://draw.aibob.top/" target="_blank" class="mdui-list-item-content">DrawBoB / 无限制审核的绘画机器人</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://gaokao.aibob.top/" target="_blank" class="mdui-list-item-content">College Entrance BoB / 高考报名辅助机器人</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://learn.aibob.top/" target="_blank" class="mdui-list-item-content">LearnBoB / 学习解答专用机器人</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://dev.aibob.top/" target="_blank" class="mdui-list-item-content">BoBDev / AIBoB开发者平台</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="mdui-card-content" id="content-area">
-                <!-- 内容将在这里显示 -->
+            <div class="mdui-card">
+                <div class="mdui-card-header">
+                    <div class="mdui-card-header-title">语言学习</div>
+                </div>
+                <div class="mdui-card-content">
+                    <ul class="mdui-list">
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://py.aibob.top/" target="_blank" class="mdui-list-item-content">Python学习</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://c.aibob.top/" target="_blank" class="mdui-list-item-content">C语言学习</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://html.aibob.top/" target="_blank" class="mdui-list-item-content">前端语言学习</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mdui-card">
+                <div class="mdui-card-header">
+                    <div class="mdui-card-header-title">关于AIBoB</div>
+                </div>
+                <div class="mdui-card-content">
+                    <p>AIBoB Club成立于2023年，从创立开始就致力于创造一个集成众多多模态高级模型的AI平台，现在平台拥有GPT-4o，Claude-3.5-Sonnet，Gemini-1.5-Pro等20余个综合全网搜索，绘画，视频等的一站式平台。致力于让所有人享受AI的红利，以最低的成本享受高级的所有模型。现在演变成一站式学习，AI等的站点。</p>
+                </div>
+            </div>
+            <div class="mdui-card">
+                <div class="mdui-card-header">
+                    <div class="mdui-card-header-title">各大LLM平台</div>
+                </div>
+                <div class="mdui-card-content">
+                    <ul class="mdui-list">
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://chatgpt.com/" target="_blank" class="mdui-list-item-content">ChatGPT / OpenAI</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://gemini.google.com/" target="_blank" class="mdui-list-item-content">Gemini / Google</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://claude.ai/" target="_blank" class="mdui-list-item-content">Claude / Anthropic</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://tongyi.aliyun.com/" target="_blank" class="mdui-list-item-content">通义 / 阿里巴巴</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://www.lingyiwanwu.com/" target="_blank" class="mdui-list-item-content">YI-Lightning / 零一万物</a>
+                        </li>
+                       <li class="mdui-list-item mdui-ripple">
+                            <a href="https://www.llama.com/" target="_blank" class="mdui-list-item-content">Llama / Meta</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mdui-card">
+                <div class="mdui-card-header">
+                    <div class="mdui-card-header-title">搜索引擎</div>
+                </div>
+                <div class="mdui-card-content">
+                    <ul class="mdui-list">
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://www.google.com/" target="_blank" class="mdui-list-item-content">Google / 谷歌</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://cn.bing.com/" target="_blank" class="mdui-list-item-content">Bing / 必应</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://duckduckgo.com/" target="_blank" class="mdui-list-item-content">DuckDuckGo</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://www.baidu.com/" target="_blank" class="mdui-list-item-content">Baidu / 百度</a>
+                        </li>
+                        <li class="mdui-list-item mdui-ripple">
+                            <a href="https://ahmia.fi/" target="_blank" class="mdui-list-item-content">Ahmia / 隐藏网络搜索引擎</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mdui-card">
+                <div class="mdui-card-header">
+                    <div class="mdui-card-header-title">状态</div>
+                </div>
+                <div class="mdui-card-content">
+                    <p>一切功能运行良好。如果遇到问题，请尝试刷新网络或者等下再试。</p>
+                </div>
             </div>
         </div>
     </div>
@@ -83,9 +204,6 @@
     <script>
         // 初始化MDUI组件
         mdui.mutation();
-
-        // 初始化抽屉菜单
-        var drawer = new mdui.Drawer('#main-drawer', {overlay: true});
 
         // 主题切换功能
         var body = document.body;
@@ -101,63 +219,16 @@
                 body.classList.remove('mdui-theme-layout-dark');
                 themeToggle.innerHTML = '<i class="mdui-icon material-icons">brightness_4</i>';
             }
+            // 保存主题设置到本地存储
             localStorage.setItem('darkMode', isDark);
         }
 
+        // 检查并应用保存的主题设置
         if (localStorage.getItem('darkMode') === 'true') {
             toggleDarkMode();
         }
 
         themeToggle.addEventListener('click', toggleDarkMode);
-
-        // 加载内容函数
-        function loadContent(page) {
-            var contentTitle = document.getElementById('content-title');
-            var contentArea = document.getElementById('content-area');
-            
-            switch(page) {
-                case 'home':
-                    contentTitle.textContent = '首页';
-                    contentArea.innerHTML = '<p>欢迎来到首页！这里可以放置主要内容。</p>';
-                    break;
-                case 'privacy':
-                    contentTitle.textContent = '隐私政策';
-                    contentArea.innerHTML = '<p>这里是隐私政策内容。</p>';
-                    break;
-                case 'disclaimer':
-                    contentTitle.textContent = '免责声明';
-                    contentArea.innerHTML = '<p>这里是免责声明内容。</p>';
-                    break;
-                default:
-                    loadMarkdown();
-            }
-            
-            if (window.innerWidth < 1024) {
-                drawer.close();
-            }
-        }
-
-        // 加载Markdown内容
-        function loadMarkdown() {
-            fetch('sub.md')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('HTTP error ' + response.status);
-                    }
-                    return response.text();
-                })
-                .then(text => {
-                    document.getElementById('content-title').textContent = 'Markdown 内容';
-                    document.getElementById('content-area').innerHTML = marked.parse(text);
-                })
-                .catch(error => {
-                    console.error('加载 Markdown 文件时出错:', error);
-                    document.getElementById('content-area').innerHTML = '加载内容时出错。请确保 sub.md 文件存在且可访问。';
-                });
-        }
-
-        // 初始加载首页内容
-        loadContent('home');
     </script>
 </body>
 </html>
