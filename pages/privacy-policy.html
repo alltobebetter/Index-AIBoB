@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <title>AIBoB - 让每个人都享受AI的乐趣</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/css/mdui.min.css">
+    <style>
+        .mdui-card {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-accent-pink">
+    <header class="mdui-appbar mdui-appbar-fixed">
+        <div class="mdui-toolbar mdui-color-white">
+            <span class="mdui-btn mdui-btn-icon mdui-ripple" mdui-drawer="{target: '#main-drawer', swipe: true}">
+                <i class="mdui-icon material-icons">menu</i>
+            </span>
+            <a href="javascript:;" class="mdui-typo-headline">AIBoB / 让每个人享受到AI的乐趣</a>
+            <div class="mdui-toolbar-spacer"></div>
+            <button class="mdui-btn mdui-btn-icon" id="theme-toggle">
+                <i class="mdui-icon material-icons">brightness_4</i>
+            </button>
+        </div>
+    </header>
+
+    <div class="mdui-drawer mdui-drawer-close" id="main-drawer">
+        <ul class="mdui-list">
+            <a href="index.html">
+                <li class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">home</i>
+                    <div class="mdui-list-item-content">首页</div>
+                </li>
+            </a>
+            <a href="https://py.aibob.top/">
+                <li class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">school</i>
+                    <div class="mdui-list-item-content">Python学习</div>
+                </li>
+            </a>
+            <a href="https://hcbbs.eu.org/">
+                <li class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">chat</i>
+                    <div class="mdui-list-item-content">HcBBs 论坛</div>
+                </li>
+            </a>
+            <a href="privacy.html">
+                <li class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons">info</i>
+                    <div class="mdui-list-item-content">隐私政策</div>
+                </li>
+            </a>
+        </ul>
+    </div>
+
+    <div class="mdui-container mdui-typo mdui-p-t-5 mdui-p-b-4">
+        <div class="mdui-card">
+            <div class="mdui-card-header">
+                <div class="mdui-card-header-title">卡片标题</div>
+            </div>
+            <div class="mdui-card-content">
+                <p>这里是卡片内容。您可以根据需要添加任何内容。</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/js/mdui.min.js"></script>
+    <script>
+        // 初始化MDUI组件
+        mdui.mutation();
+
+        // 主题切换功能
+        var body = document.body;
+        var themeToggle = document.getElementById('theme-toggle');
+        var isDark = false;
+
+        function toggleDarkMode() {
+            isDark = !isDark;
+            if (isDark) {
+                body.classList.add('mdui-theme-layout-dark');
+                themeToggle.innerHTML = '<i class="mdui-icon material-icons">brightness_7</i>';
+            } else {
+                body.classList.remove('mdui-theme-layout-dark');
+                themeToggle.innerHTML = '<i class="mdui-icon material-icons">brightness_4</i>';
+            }
+            // 保存主题设置到本地存储
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        // 检查并应用保存的主题设置
+        if (localStorage.getItem('darkMode') === 'true') {
+            toggleDarkMode();
+        }
+
+        themeToggle.addEventListener('click', toggleDarkMode);
+    </script>
+</body>
+</html>
