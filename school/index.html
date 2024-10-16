@@ -3,161 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <title>我的MDUI网页</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/css/mdui.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/js/mdui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
     <style>
-        .content-container {
-            padding-top: 76px;
-            transition: margin-left 0.3s ease;
+        .mdui-theme-layout-dark {
+            background-color: #303030;
+            color: #fff;
         }
-        @media (min-width: 1024px) {
-            .mdui-drawer-open + .mdui-container {
-                margin-left: 240px;
-            }
+        .mdui-theme-layout-dark .mdui-card {
+            background-color: #424242;
+        }
+        .content-container {
+            padding-top: 76px; /* 调整顶部间距，避免与顶栏冲突 */
         }
     </style>
 </head>
-<body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
-    <header class="mdui-appbar mdui-appbar-fixed">
+<body class="mdui-theme-primary-pink mdui-theme-accent-pink">
+    <div class="mdui-appbar mdui-appbar-fixed">
         <div class="mdui-toolbar mdui-color-theme">
-            <span class="mdui-btn mdui-btn-icon mdui-ripple" mdui-drawer="{target: '#main-drawer', swipe: true}">
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon">
                 <i class="mdui-icon material-icons">menu</i>
-            </span>
-            <a href="javascript:;" class="mdui-typo-headline">我的MDUI网页</a>
+            </a>
+            <span class="mdui-typo-title">我的MDUI网页</span>
             <div class="mdui-toolbar-spacer"></div>
-            <button class="mdui-btn mdui-btn-icon" id="theme-toggle">
+            <button class="mdui-btn mdui-btn-icon" id="toggle-theme">
                 <i class="mdui-icon material-icons">brightness_4</i>
             </button>
         </div>
-    </header>
-
-    <div class="mdui-drawer mdui-drawer-close" id="main-drawer">
-        <ul class="mdui-list">
-            <a href="javascript:;" onclick="loadContent('home')">
-                <li class="mdui-list-item mdui-ripple">
-                    <i class="mdui-list-item-icon mdui-icon material-icons">home</i>
-                    <div class="mdui-list-item-content">首页</div>
-                </li>
-            </a>
-            <a href="https://py.aibob.top/" target="_blank">
-                <li class="mdui-list-item mdui-ripple">
-                    <i class="mdui-list-item-icon mdui-icon material-icons">school</i>
-                    <div class="mdui-list-item-content">Python学习</div>
-                </li>
-            </a>
-            <a href="https://hcbbs.eu.org/" target="_blank">
-                <li class="mdui-list-item mdui-ripple">
-                    <i class="mdui-list-item-icon mdui-icon material-icons">chat</i>
-                    <div class="mdui-list-item-content">HcBBs 论坛</div>
-                </li>
-            </a>
-            <a href="javascript:;" onclick="loadContent('privacy')">
-                <li class="mdui-list-item mdui-ripple">
-                    <i class="mdui-list-item-icon mdui-icon material-icons">info</i>
-                    <div class="mdui-list-item-content">隐私政策</div>
-                </li>
-            </a>
-            <a href="javascript:;" onclick="loadContent('disclaimer')">
-                <li class="mdui-list-item mdui-ripple">
-                    <i class="mdui-list-item-icon mdui-icon material-icons">import_contacts</i>
-                    <div class="mdui-list-item-content">免责声明</div>
-                </li>
-            </a>
-        </ul>
     </div>
 
     <div class="mdui-container content-container">
         <div class="mdui-card">
             <div class="mdui-card-primary">
-                <div class="mdui-card-primary-title" id="content-title">欢迎</div>
+                <div class="mdui-card-primary-title">Markdown 内容</div>
             </div>
-            <div class="mdui-card-content" id="content-area">
-                <!-- 内容将在这里显示 -->
+            <div class="mdui-card-content" id="markdown-content">
+                <!-- Markdown 内容将在这里显示 -->
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/js/mdui.min.js"></script>
     <script>
-        // 初始化MDUI组件
-        mdui.mutation();
+        // 切换日/夜间模式
+        document.getElementById('toggle-theme').addEventListener('click', function() {
+            document.body.classList.toggle('mdui-theme-layout-dark');
+        });
 
-        // 初始化抽屉菜单
-        var drawer = new mdui.Drawer('#main-drawer', {overlay: true});
-
-        // 主题切换功能
-        var body = document.body;
-        var themeToggle = document.getElementById('theme-toggle');
-        var isDark = false;
-
-        function toggleDarkMode() {
-            isDark = !isDark;
-            if (isDark) {
-                body.classList.add('mdui-theme-layout-dark');
-                themeToggle.innerHTML = '<i class="mdui-icon material-icons">brightness_7</i>';
-            } else {
-                body.classList.remove('mdui-theme-layout-dark');
-                themeToggle.innerHTML = '<i class="mdui-icon material-icons">brightness_4</i>';
-            }
-            localStorage.setItem('darkMode', isDark);
-        }
-
-        if (localStorage.getItem('darkMode') === 'true') {
-            toggleDarkMode();
-        }
-
-        themeToggle.addEventListener('click', toggleDarkMode);
-
-        // 加载内容函数
-        function loadContent(page) {
-            var contentTitle = document.getElementById('content-title');
-            var contentArea = document.getElementById('content-area');
-            
-            switch(page) {
-                case 'home':
-                    contentTitle.textContent = '首页';
-                    contentArea.innerHTML = '<p>欢迎来到首页！这里可以放置主要内容。</p>';
-                    break;
-                case 'privacy':
-                    contentTitle.textContent = '隐私政策';
-                    contentArea.innerHTML = '<p>这里是隐私政策内容。</p>';
-                    break;
-                case 'disclaimer':
-                    contentTitle.textContent = '免责声明';
-                    contentArea.innerHTML = '<p>这里是免责声明内容。</p>';
-                    break;
-                default:
-                    loadMarkdown();
-            }
-            
-            if (window.innerWidth < 1024) {
-                drawer.close();
-            }
-        }
-
-        // 加载Markdown内容
-        function loadMarkdown() {
-            fetch('sub.md')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('HTTP error ' + response.status);
-                    }
-                    return response.text();
-                })
-                .then(text => {
-                    document.getElementById('content-title').textContent = 'Markdown 内容';
-                    document.getElementById('content-area').innerHTML = marked.parse(text);
-                })
-                .catch(error => {
-                    console.error('加载 Markdown 文件时出错:', error);
-                    document.getElementById('content-area').innerHTML = '加载内容时出错。请确保 sub.md 文件存在且可访问。';
-                });
-        }
-
-        // 初始加载首页内容
-        loadContent('home');
+        // 加载并渲染 Markdown 内容
+        fetch('sub.md')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('HTTP error ' + response.status);
+                }
+                return response.text();
+            })
+            .then(text => {
+                document.getElementById('markdown-content').innerHTML = marked.parse(text);
+            })
+            .catch(error => {
+                console.error('加载 Markdown 文件时出错:', error);
+                document.getElementById('markdown-content').innerHTML = '加载内容时出错。请确保 sub.md 文件存在且可访问。';
+            });
     </script>
 </body>
 </html>
