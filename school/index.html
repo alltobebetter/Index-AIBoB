@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雪域暖阳 / AIBoB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/css/mdui.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/js/mdui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
+    <style>
+        .mdui-theme-layout-dark {
+            background-color: #303030;
+            color: #fff;
+        }
+        .mdui-theme-layout-dark .mdui-card {
+            background-color: #424242;
+        }
+    </style>
+</head>
+<body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
+    <div class="mdui-appbar mdui-appbar-fixed">
+        <div class="mdui-toolbar mdui-color-theme">
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon">
+                <i class="mdui-icon material-icons">menu</i>
+            </a>
+            <span class="mdui-typo-title">我的MDUI网页</span>
+            <div class="mdui-toolbar-spacer"></div>
+            <button class="mdui-btn mdui-btn-icon" id="toggle-theme">
+                <i class="mdui-icon material-icons">brightness_4</i>
+            </button>
+        </div>
+    </div>
+
+    <div class="mdui-container" style="padding-top: 20px;">
+        <div class="mdui-card">
+            <div class="mdui-card-primary">
+                <div class="mdui-card-primary-title">Markdown 内容</div>
+            </div>
+            <div class="mdui-card-content" id="markdown-content">
+                <!-- Markdown 内容将在这里显示 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 切换日/夜间模式
+        document.getElementById('toggle-theme').addEventListener('click', function() {
+            document.body.classList.toggle('mdui-theme-layout-dark');
+        });
+
+        // 加载并渲染 Markdown 内容
+        fetch('sub.md')
+            .then(response => response.text())
+            .then(text => {
+                document.getElementById('markdown-content').innerHTML = marked.parse(text);
+            })
+            .catch(error => {
+                console.error('加载 Markdown 文件时出错:', error);
+                document.getElementById('markdown-content').innerHTML = '加载内容时出错。';
+            });
+    </script>
+</body>
+</html>
