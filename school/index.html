@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>雪域暖阳 / AIBoB</title>
+    <title>我的MDUI网页</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/css/mdui.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/js/mdui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
@@ -15,9 +15,12 @@
         .mdui-theme-layout-dark .mdui-card {
             background-color: #424242;
         }
+        .content-container {
+            padding-top: 76px; /* 调整顶部间距，避免与顶栏冲突 */
+        }
     </style>
 </head>
-<body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
+<body class="mdui-theme-primary-pink mdui-theme-accent-pink">
     <div class="mdui-appbar mdui-appbar-fixed">
         <div class="mdui-toolbar mdui-color-theme">
             <a href="javascript:;" class="mdui-btn mdui-btn-icon">
@@ -31,7 +34,7 @@
         </div>
     </div>
 
-    <div class="mdui-container" style="padding-top: 20px;">
+    <div class="mdui-container content-container">
         <div class="mdui-card">
             <div class="mdui-card-primary">
                 <div class="mdui-card-primary-title">Markdown 内容</div>
@@ -50,13 +53,18 @@
 
         // 加载并渲染 Markdown 内容
         fetch('sub.md')
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('HTTP error ' + response.status);
+                }
+                return response.text();
+            })
             .then(text => {
                 document.getElementById('markdown-content').innerHTML = marked.parse(text);
             })
             .catch(error => {
                 console.error('加载 Markdown 文件时出错:', error);
-                document.getElementById('markdown-content').innerHTML = '加载内容时出错。';
+                document.getElementById('markdown-content').innerHTML = '加载内容时出错。请确保 sub.md 文件存在且可访问。';
             });
     </script>
 </body>
