@@ -8,25 +8,57 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdui/1.0.2/js/mdui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/2.1.3/marked.min.js"></script>
     <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+        }
+        .mdui-drawer {
+            padding-top: 64px;
+            background-color: #f5f5f5;
+        }
+        .mdui-drawer .mdui-list {
+            margin-top: 8px;
+        }
+        .mdui-drawer .mdui-list-item {
+            border-radius: 0 50px 50px 0;
+            margin-right: 12px;
+        }
+        .mdui-drawer .mdui-list-item:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        .content-wrapper {
+            flex-grow: 1;
+            padding-top: 80px;
+            padding-left: 16px;
+            padding-right: 16px;
+            transition: padding-left 0.3s;
+        }
+        .mdui-drawer-open + .content-wrapper {
+            padding-left: 256px;
+        }
+        .content-card {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        @media (max-width: 1024px) {
+            .mdui-drawer-open + .content-wrapper {
+                padding-left: 16px;
+            }
+        }
         .mdui-theme-layout-dark {
             --md-theme-primary: #303030;
             --md-theme-accent: #ff4081;
         }
-        .mdui-appbar .mdui-toolbar {
-            background-color: #fff;
-            color: #000;
+        .mdui-theme-layout-dark .mdui-drawer {
+            background-color: #424242;
         }
-        .mdui-theme-layout-dark .mdui-appbar .mdui-toolbar {
-            background-color: #303030;
-            color: #fff;
-        }
-        .content-card {
-            margin: 16px;
+        .mdui-theme-layout-dark .mdui-drawer .mdui-list-item:hover {
+            background-color: rgba(255,255,255,0.1);
         }
     </style>
 </head>
 <body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
-    <div class="mdui-appbar mdui-appbar-fixed">
+    <header class="mdui-appbar mdui-appbar-fixed">
         <div class="mdui-toolbar mdui-color-theme">
             <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#left-drawer'}">
                 <i class="mdui-icon material-icons">menu</i>
@@ -37,13 +69,13 @@
                 <i class="mdui-icon material-icons">brightness_4</i>
             </button>
         </div>
-    </div>
+    </header>
 
     <div class="mdui-drawer mdui-drawer-close" id="left-drawer">
         <ul class="mdui-list" id="sidebar-menu"></ul>
     </div>
 
-    <div class="mdui-container">
+    <div class="content-wrapper">
         <div class="mdui-card content-card">
             <div class="mdui-card-content" id="content"></div>
         </div>
@@ -76,7 +108,9 @@
                 $('.mdui-list-item').on('click', function() {
                     const path = $(this).data('path');
                     loadContent(path);
-                    inst.close();
+                    if (window.innerWidth <= 1024) {
+                        inst.close();
+                    }
                 });
 
                 // 默认加载第一个菜单项的内容
@@ -102,6 +136,13 @@
             isDark = !isDark;
             $('body').toggleClass('mdui-theme-layout-dark', isDark);
             $(this).find('i').text(isDark ? 'brightness_5' : 'brightness_4');
+        });
+
+        // 响应式处理
+        $(window).on('resize', function() {
+            if (window.innerWidth <= 1024) {
+                inst.close();
+            }
         });
     </script>
 </body>
