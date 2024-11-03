@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIBoB - 智能助手平台</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --text-color: #94a3b8;
+            --highlight-color: #60a5fa;
+            --accent-color: #8b5cf6;
+            --card-bg: #1e293b;
+            --hover-color: #2d3b55;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .terminal {
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            background: rgba(17, 25, 40, 0.75);
+            backdrop-filter: blur(16px);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .prompt {
+            color: var(--highlight-color);
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .prompt::before {
+            content: ">";
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.5s ease-out forwards;
+        }
+
+        .section h2 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section h2::before {
+            content: "#";
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .link-item {
+            padding: 1rem 1.5rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-item:hover {
+            background: var(--hover-color);
+            transform: translateY(-2px);
+            border-color: var(--highlight-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .link-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-color);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .link-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .about-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .about-section p {
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .typing-effect {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--highlight-color);
+            animation: typing 3s steps(40, end), blink 1s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent
+            }
+        }
+
+        .link-item::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.03),
+                    transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+
+        .link-item:hover::after {
+            left: 100%;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .terminal {
+                padding: 1rem;
+            }
+
+            .links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="terminal">
+        <div class="prompt">
+            <span class="typing-effect">Welcome to AIBoB Platform</span>
+        </div>
+
+        <div class="section">
+            <h2>AIBoB官方项目</h2>
+            <div class="links">
+                <div class="link-item" onclick="window.location='https://chat.aibob.top'">
+                    BoB - 多模态智能机器人
+                </div>
+                <div class="link-item" onclick="window.location='https://blog.aibob.top'">
+                    Boblog - 开源轻量级博客系统
+                </div>
+                <div class="link-item" onclick="window.location='https://md.aibob.top'">
+                    BoBMD - 在线Markdown渲染系统
+                </div>
+                <div class="link-item" onclick="window.location='https://photo.aibob.top'">
+                    BoBPhoto - 拍照识别系统
+                </div>
+                <div class="link-item" onclick="window.location='https://draw.aibob.top'">
+                    DrawBoB - 无限制审核绘画机器人
+                </div>
+                <div class="link-item" onclick="window.location='https://gaokao.aibob.top'">
+                    College Entrance BoB - 高考报名辅助
+                </div>
+                <div class="link-item" onclick="window.location='https://learn.aibob.top'">
+                    LearnBoB - 学习解答专用机器人
+                </div>
+                <div class="link-item" onclick="window.location='https://dev.aibob.top'">
+                    BoBDev - AIBoB开发者平台
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>学习资源</h2>
+            <div class="links">
+                <div class="link-item" onclick="window.location='https://py.aibob.top'">
+                    Python学习
+                </div>
+                <div class="link-item" onclick="window.location='https://c.aibob.top'">
+                    C语言学习
+                </div>
+                <div class="link-item" onclick="window.location='https://html.aibob.top'">
+                    前端语言学习
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>LLM平台链接</h2>
+            <div class="links">
+                <div class="link-item" onclick="window.location='https://chatgpt.com'">
+                    ChatGPT
+                </div>
+                <div class="link-item" onclick="window.location='https://gemini.google.com'">
+                    Gemini
+                </div>
+                <div class="link-item" onclick="window.location='https://claude.ai'">
+                    Claude
+                </div>
+                <div class="link-item" onclick="window.location='https://tongyi.aliyun.com'">
+                    通义
+                </div>
+                <div class="link-item" onclick="window.location='https://lingyiwanwu.com'">
+                    YI-Lightning
+                </div>
+                <div class="link-item" onclick="window.location='https://llama.com'">
+                    Llama
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>搜索引擎链接</h2>
+            <div class="links">
+                <div class="link-item" onclick="window.location='https://google.com'">
+                    Google
+                </div>
+                <div class="link-item" onclick="window.location='https://cn.bing.com'">
+                    Bing
+                </div>
+                <div class="link-item" onclick="window.location='https://duckduckgo.com'">
+                    DuckDuckGo
+                </div>
+                <div class="link-item" onclick="window.location='https://baidu.com'">
+                    Baidu
+                </div>
+                <div class="link-item" onclick="window.location='https://ahmia.fi'">
+                    Ahmia
+                </div>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <h2>关于AIBoB</h2>
+            <p>
+                AIBoB Club成立于2023年，是一个集成多个高级AI模型的综合平台，包含GPT-4、Claude-3.5-Sonnet、
+                Gemini-1.5-Pro等20多个模型，提供搜索、绘画、视频等服务，目标是让所有人都能以低成本享受高级AI服务。
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                section.style.animationDelay = `${(index + 1) * 0.3}s`;
+            });
+        });
+    </script>
+</body>
+
+</html>
