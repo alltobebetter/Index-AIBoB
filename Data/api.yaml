@@ -1,7 +1,7 @@
 providers:
-  - provider: openai  # 使用 openai 作为提供商名称
-    base_url: https://api.gptgod.online/v1/chat/completions  # 你的 API 基础 URL
-    api: sk-GO4OzDI4USZ67V6DDtdJ0e7mi713ZOpm12x6VlsGPHqbNKVd  # 你的 API key
+  - provider: openai
+    base_url: https://api.gptgod.online/v1/chat/completions
+    api: sk-GO4OzDI4USZ67V6DDtdJ0e7mi713ZOpm12x6VlsGPHqbNKVd
 
 api_keys:
-  - api: sk-uniapi-test-123456789  # 为用户创建的随机 API key
+  - api: sk-uniapi-test-123456789
