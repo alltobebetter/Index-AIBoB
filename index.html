@@ -1,442 +1,581 @@
 <!DOCTYPE html>
 <html lang="zh">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIBoB - 智能助手平台</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <title>问 BoB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    
-    <!-- 微信和 Open Graph 标签 -->
-    <meta property="og:title" content="AIBoB - 智能助手平台">
-    <meta property="og:description" content="AIBoB Club成立于2023年，是一个集成多个高级AI模型的综合平台。">
-    <meta property="og:image" content="https://www.aibob.top/logo.png">
-    <meta name="weixin:image" content="https://www.aibob.top/logo.png">
-    <meta name="weixin:icon" content="https://www.aibob.top/logo.png">
-    <meta name="weixin:timeline_title" content="AIBoB - 智能助手平台">
-    
     <style>
         :root {
-            --bg-color: #0f172a;
-            --text-color: #94a3b8;
-            --highlight-color: #60a5fa;
-            --accent-color: #8b5cf6;
-            --card-bg: #1e293b;
-            --hover-color: #2d3b55;
+            --primary: rgb(214, 158, 73);
+            --second: rgb(255, 243, 212);
+            --bg: linear-gradient(120deg, #f6f8fd 0%, #f1f4f9 100%);
+            --text: #1a1a1a;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-hover: rgba(255, 243, 212, 0.4);
+            --search-bg: rgba(255, 255, 255, 0.95);
+        }
+
+        [data-theme="dark"] {
+            --primary: rgb(255, 198, 112);
+            --second: rgb(66, 48, 21);
+            --bg: linear-gradient(120deg, #1a1a1a 0%, #2d2d2d 100%);
+            --text: #ffffff;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --card-hover: rgba(60, 60, 60, 0.4);
+            --search-bg: rgba(40, 40, 40, 0.95);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
-            color: var(--text-color);
-            line-height: 1.6;
-            padding: 2rem;
-            overflow-x: hidden;
             min-height: 100vh;
-            background: linear-gradient(-45deg, #0f172a, #1e293b, #374151, #1f2937);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50% }
-            50% { background-position: 100% 50% }
-            100% { background-position: 0% 50% }
-        }
-
-        .terminal {
-            max-width: 1200px;
-            margin: 0 auto;
-            opacity: 0;
-            animation: fadeIn 1s ease-out forwards;
-            background: rgba(17, 25, 40, 0.75);
-            backdrop-filter: blur(16px);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        .prompt {
-            color: var(--highlight-color);
-            margin-bottom: 2rem;
-            font-size: 1.2rem;
+            background: var(--bg);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .prompt::before {
-            content: ">";
-            color: var(--accent-color);
-            font-weight: bold;
+        .container {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
         }
 
-        .section {
-            margin-bottom: 3rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideUp 0.5s ease-out forwards;
-            will-change: transform, opacity;
-        }
-
-        .section h2 {
-            color: #fff;
+        .title {
+            font-size: 2.8rem;
+            color: var(--text);
             margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .section h2::before {
-            content: "#";
-            color: var(--accent-color);
-            font-weight: bold;
-        }
-
-        .links {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .link-item {
-            padding: 1rem 1.5rem;
-            background: rgba(30, 41, 59, 0.8);
-            border-radius: 8px;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            animation: fadeInDown 1s ease;
             position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(8px);
-            transform-style: preserve-3d;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            will-change: transform;
         }
 
-        .link-item:hover {
-            transform: translateY(-5px) rotateX(10deg) rotateY(10deg);
-            box-shadow: 
-                0 5px 15px rgba(0, 0, 0, 0.3),
-                0 15px 35px rgba(0, 0, 0, 0.2);
-            border-color: var(--highlight-color);
-            background: var(--hover-color);
+        .title .gradient-text {
+            background: linear-gradient(
+                135deg,
+                rgb(214, 158, 73) 0%,
+                rgb(224, 168, 83) 30%,
+                rgb(234, 178, 93) 50%,
+                rgb(244, 188, 103) 70%,
+                rgb(255, 243, 212) 100%
+            );
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            font-weight: 900;
+            text-shadow: 0px 2px 10px rgba(214, 158, 73, 0.2);
+            animation: gradientMove 8s ease infinite;
         }
 
-        .link-item::before {
-            content: '';
+        .title .gradient-text::after {
+            content: 'BoB';
             position: absolute;
-            top: 0;
             left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--accent-color);
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
+            top: 0;
+            filter: blur(20px);
+            opacity: 0.3;
+            background: inherit;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            z-index: -1;
         }
 
-        .link-item:hover::before {
-            transform: scaleY(1);
+        .subtitle {
+            margin-bottom: 3.5rem;
+            font-size: 1.2rem;
+            animation: fadeIn 1s ease 0.3s both;
+            line-height: 1.6;
+            font-weight: 500;
+            background: linear-gradient(to right, rgb(214, 158, 73), rgb(224, 168, 83));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.5);
         }
 
-        .link-item::after {
-            content: '';
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 2.5rem;
+            animation: fadeIn 1s ease 0.6s both;
+        }
+
+        .search-container {
+            background: var(--search-bg);
+            border-radius: 20px;
+            padding: 8px;
+            box-shadow: 
+                0 10px 30px rgba(214, 158, 73, 0.05),
+                0 1px 8px rgba(214, 158, 73, 0.02),
+                0 0 0 1px rgba(214, 158, 73, 0.03);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .search-container:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 
+                0 20px 40px rgba(214, 158, 73, 0.08),
+                0 1px 10px rgba(214, 158, 73, 0.02),
+                0 0 0 1px rgba(214, 158, 73, 0.03);
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            width: 100%;
+            height: 60px;
+            overflow: hidden;
+        }
+
+        .placeholder-animation {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg,
-                    transparent,
-                    rgba(255, 255, 255, 0.03),
-                    transparent);
-            transform: rotate(45deg);
-            transition: 0.5s;
-        }
-
-        .link-item:hover::after {
-            left: 100%;
-        }
-
-        .about-section {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 8px;
-            margin-top: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transform: translateZ(0);
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: rgba(214, 158, 73, 0.6);
             transition: all 0.3s ease;
         }
 
-        .about-section:hover {
+        .placeholder-text {
+            display: block;
+            animation: slideUpIn 0.5s ease forwards;
+        }
+
+        .placeholder-text.slideOut {
+            animation: slideUpOut 0.5s ease forwards;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 100%;
+            padding: 16px 24px;
+            font-size: 1.1rem;
+            border: none;
+            background: transparent;
+            color: rgb(214, 158, 73);
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: transparent;
+        }
+
+        .search-button {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, rgb(214, 158, 73) 0%, rgb(224, 168, 83) 100%);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-button:hover {
+            background: linear-gradient(135deg, rgb(224, 168, 83) 0%, rgb(214, 158, 73) 100%);
+            transform: translateY(-50%) scale(1.02);
+        }
+        .examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 2rem;
+            animation: fadeIn 1s ease 0.9s both;
+        }
+
+        .example-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(214, 158, 73, 0.1);
+            cursor: pointer;
+        }
+
+        .example-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: var(--card-hover);
+            box-shadow: 0 10px 20px rgba(214, 158, 73, 0.1);
         }
 
-        .about-section p {
-            color: #cbd5e1;
-            line-height: 1.8;
+        .example-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: rgb(214, 158, 73);
         }
 
-        .cursor-glow {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, 
-                rgba(96, 165, 250, 0.15),
-                transparent 70%);
-            position: fixed;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            transition: 0.15s ease-out;
+        .example-title {
+            font-weight: 600;
+            color: rgb(214, 158, 73);
+            margin-bottom: 0.5rem;
         }
 
-        .typing-effect {
-            overflow: hidden;
-            white-space: nowrap;
-            border-right: 2px solid var(--highlight-color);
-            animation: typing 3s steps(40, end), blink 1s step-end infinite;
+        .example-desc {
+            font-size: 0.9rem;
+            color: rgba(214, 158, 73, 0.8);
         }
 
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
-        @keyframes blink {
-            50% { border-color: transparent }
+        .floating {
+            animation: float 6s ease-in-out infinite;
         }
 
-        @keyframes fadeIn {
-            to { opacity: 1 }
+        .title-wrapper {
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
         }
 
-        @keyframes slideUp {
-            to {
+        .title-wrapper::before,
+        .title-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgb(214, 158, 73);
+            top: 50%;
+            transform: translateY(-50%);
+            animation: pulse 2s infinite;
+        }
+
+        .title-wrapper::before {
+            left: 0;
+            animation-delay: 0s;
+        }
+
+        .title-wrapper::after {
+            right: 0;
+            animation-delay: 1s;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translateY(-50%) scale(1);
                 opacity: 1;
+            }
+            50% {
+                transform: translateY(-50%) scale(1.5);
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUpIn {
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            100% {
                 transform: translateY(0);
+                opacity: 1;
             }
         }
 
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem;
+        @keyframes slideUpOut {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
             }
-
-            .terminal {
-                padding: 1rem;
-            }
-
-            .links {
-                grid-template-columns: 1fr;
-            }
-
-            .cursor-glow {
-                display: none;
+            100% {
+                transform: translateY(-100%);
+                opacity: 0;
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            .cursor-glow {
-                display: none;
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
             }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
 
-            .link-item {
-                transition: none;
-            }
+        .title .gradient-text:hover {
+            animation: rubberBand 1s ease;
+        }
 
-            body {
-                animation: none;
+        @keyframes rubberBand {
+            0% { transform: scale(1); }
+            30% { transform: scale(1.15); }
+            40% { transform: scale(0.95); }
+            50% { transform: scale(1.05); }
+            65% { transform: scale(0.98); }
+            75% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .footer-links {
+            margin-top: 3rem;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: rgb(214, 158, 73);
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0.8;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: rgb(214, 158, 73);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .footer-link:hover {
+            opacity: 1;
+            background: rgba(255, 243, 212, 0.4);
+        }
+
+        .footer-link:hover::after {
+            width: 80%;
+        }
+
+        .footer-divider {
+            color: rgb(214, 158, 73);
+            opacity: 0.5;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+            .footer-links {
+                gap: 0.5rem;
             }
+            
+            .footer-link {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* 添加主题切换按钮样式 */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
-
 <body>
-    <div class="terminal">
-        <div class="prompt">
-            <span class="typing-effect">Welcome to AIBoB</span>
+    <button class="theme-toggle" id="themeToggle">🌓</button>
+    <div class="container">
+        <div class="title-wrapper">
+            <h1 class="title">😆 问 <span class="gradient-text">aiBoB</span> 任何东西</h1>
+        </div>
+        <p class="subtitle">让每一个人，都可以享受AI带来的乐趣</p>
+        
+        <div class="search-wrapper">
+            <form action="https://chat.aibob.top" method="get">
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <div class="placeholder-animation" id="placeholderAnimation">
+                            <span class="placeholder-text">解释一下这段代码的意思...</span>
+                        </div>
+                        <input type="text" 
+                               id="searchInput"
+                               name="q" 
+                               class="search-input"
+                               autocomplete="off">
+                    </div>
+                    <button type="submit" class="search-button">
+                        发送
+                    </button>
+                </div>
+            </form>
         </div>
 
-        <div class="section">
-            <h2>AIBoB官方项目</h2>
-            <div class="links">
-                <div class="link-item" onclick="window.location='https://chat.aibob.top'">
-                    BoB - 多模态智能机器人
-                </div>
-                <div class="link-item" onclick="window.location='https://blog.aibob.top'">
-                    Boblog - 开源轻量级博客系统
-                </div>
-                <div class="link-item" onclick="window.location='https://md.aibob.top'">
-                    BoBMD - 在线Markdown渲染系统
-                </div>
-                <div class="link-item" onclick="window.location='https://photo.aibob.top'">
-                    BoBPhoto - 拍照识别系统
-                </div>
-                <div class="link-item" onclick="window.location='https://draw.aibob.top'">
-                    DrawBoB - 无限制审核绘画机器人
-                </div>
-                <div class="link-item" onclick="window.location='https://gaokao.aibob.top'">
-                    College Entrance BoB - 高考报名辅助
-                </div>
-                <div class="link-item" onclick="window.location='https://learn.aibob.top'">
-                    LearnBoB - 学习解答专用机器人
-                </div>
-                <div class="link-item" onclick="window.location='https://dev.aibob.top'">
-                    BoBDev - AIBoB开发者平台
-                </div>
+        <div class="examples">
+            <div class="example-card floating">
+                <div class="example-icon">🚀</div>
+                <div class="example-title">编写代码</div>
+                <div class="example-desc">提高编程效率</div>
+            </div>
+            <div class="example-card floating" style="animation-delay: 1s;">
+                <div class="example-icon">💡</div>
+                <div class="example-title">创意灵感</div>
+                <div class="example-desc">激发无限创意</div>
+            </div>
+            <div class="example-card floating" style="animation-delay: 2s;">
+                <div class="example-icon">📚</div>
+                <div class="example-title">角色扮演</div>
+                <div class="example-desc">提升个人乐趣</div>
             </div>
         </div>
-
-        <div class="section">
-            <h2>学习资源</h2>
-            <div class="links">
-                <div class="link-item" onclick="window.location='https://py.aibob.top'">
-                    Python学习
-                </div>
-                <div class="link-item" onclick="window.location='https://c.aibob.top'">
-                    C语言学习
-                </div>
-                <div class="link-item" onclick="window.location='https://html.aibob.top'">
-                    前端语言学习
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>LLM平台链接</h2>
-            <div class="links">
-                <div class="link-item" onclick="window.location='https://chatgpt.com'">
-                    ChatGPT
-                </div>
-                <div class="link-item" onclick="window.location='https://gemini.google.com'">
-                    Gemini
-                </div>
-                <div class="link-item" onclick="window.location='https://claude.ai'">
-                    Claude
-                </div>
-                <div class="link-item" onclick="window.location='https://tongyi.aliyun.com'">
-                    通义
-                </div>
-                <div class="link-item" onclick="window.location='https://lingyiwanwu.com'">
-                    YI-Lightning
-                </div>
-                <div class="link-item" onclick="window.location='https://llama.com'">
-                    Llama
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>搜索引擎链接</h2>
-            <div class="links">
-                <div class="link-item" onclick="window.location='https://google.com'">
-                    Google
-                </div>
-                <div class="link-item" onclick="window.location='https://cn.bing.com'">
-                    Bing
-                </div>
-                <div class="link-item" onclick="window.location='https://duckduckgo.com'">
-                    DuckDuckGo
-                </div>
-                <div class="link-item" onclick="window.location='https://baidu.com'">
-                    Baidu
-                </div>
-                <div class="link-item" onclick="window.location='https://ahmia.fi'">
-                    Ahmia
-                </div>
-            </div>
-        </div>
-
-        <div class="about-section">
-            <h2>关于AIBoB</h2>
-            <p>
-                AIBoB Club成立于2023年，是一个集成多个高级AI模型的综合平台，包含GPT-4、Claude-3.5-Sonnet、
-                Gemini-1.5-Pro等20多个模型，提供搜索、绘画、视频等服务，目标是让所有人都能以低成本享受高级AI服务。
-            </p>
+        <div class="footer-links animate__animated animate__fadeIn" style="animation-delay: 1.2s;">
+            <a href="https://md.aibob.top/" class="footer-link">Markdown在线编辑器</a>
+            <span class="footer-divider">•</span>
+            <a href="https://gaokao.aibob.top/" class="footer-link">高考报名AI系统</a>
+            <span class="footer-divider">•</span>
+            <a href="https://dev.aibob.top/" class="footer-link">开发者平台</a>
+            <span class="footer-divider">•</span>
+            <a href="https://learn.aibob.top/" class="footer-link">语言学习</a>
+            <span class="footer-divider">•</span>
+            <a href="https://all.aibob.top/" class="footer-link">全部资源</a>
         </div>
     </div>
 
     <script>
-        // 添加鼠标跟随效果
-        const cursor = document.createElement('div');
-        cursor.classList.add('cursor-glow');
-        document.body.appendChild(cursor);
+        const placeholders = [
+            "今天晚上吃什么...",
+            "学习Python应该怎么学...",
+            "最近的大事件...",
+            "图片里面的内容是...",
+            "阅读一下这个文件的内容...",
+            "帮我分析一下这段代码...",
+            "如何提高编程能力...",
+            "推荐几本编程书籍...",
+            "帮我解释这个错误信息...",
+            "这周末去哪里玩比较好..."
+        ];
 
-        document.addEventListener('mousemove', (e) => {
-            requestAnimationFrame(() => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
+        let currentIndex = 0;
+        const placeholderAnimation = document.getElementById('placeholderAnimation');
+        const searchInput = document.getElementById('searchInput');
+        let isInputFocused = false;
+        let animationTimeout;
+
+        function updatePlaceholder() {
+            if (isInputFocused || searchInput.value) return;
+
+            const currentPlaceholder = placeholderAnimation.querySelector('.placeholder-text');
+            currentPlaceholder.classList.add('slideOut');
+
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % placeholders.length;
+                placeholderAnimation.innerHTML = `<span class="placeholder-text">${placeholders[currentIndex]}</span>`;
+            }, 250);
+        }
+
+        function startPlaceholderAnimation() {
+            if (!isInputFocused && !searchInput.value) {
+                animationTimeout = setInterval(updatePlaceholder, 1500);
+            }
+        }
+
+        function stopPlaceholderAnimation() {
+            clearInterval(animationTimeout);
+        }
+
+        searchInput.addEventListener('focus', () => {
+            isInputFocused = true;
+            placeholderAnimation.style.opacity = '0';
+            stopPlaceholderAnimation();
         });
 
-        // 为卡片添加3D倾斜效果
-        document.querySelectorAll('.link-item').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = (y - centerY) / 10;
-                const rotateY = -(x - centerX) / 10;
-                
-                requestAnimationFrame(() => {
-                    card.style.transform = `
-                        perspective(1000px)
-                        rotateX(${rotateX}deg)
-                        rotateY(${rotateY}deg)
-                        translateZ(10px)
-                    `;
-                });
-            });
-
-            card.addEventListener('mouseleave', () => {
-                requestAnimationFrame(() => {
-                    card.style.transform = 'none';
-                });
-            });
+        searchInput.addEventListener('blur', () => {
+            isInputFocused = false;
+            if (!searchInput.value) {
+                placeholderAnimation.style.opacity = '1';
+                startPlaceholderAnimation();
+            }
         });
 
-        // 添加滚动显示动画
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    requestAnimationFrame(() => {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    });
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(50px)';
-            observer.observe(section);
+        searchInput.addEventListener('input', () => {
+            if (searchInput.value) {
+                placeholderAnimation.style.opacity = '0';
+                stopPlaceholderAnimation();
+            } else if (!isInputFocused) {
+                placeholderAnimation.style.opacity = '1';
+                startPlaceholderAnimation();
+            }
         });
 
-        // 初始化动画
-        document.addEventListener('DOMContentLoaded', () => {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach((section, index) => {
-                section.style.animationDelay = `${(index + 1) * 0.3}s`;
-            });
+        // 初始化
+        startPlaceholderAnimation();
+
+        // 主题切换功能
+        const themeToggle = document.getElementById('themeToggle');
+        
+        // 检查本地存储中的主题设置
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeToggle.textContent = savedTheme === 'dark' ? '🌞' : '🌓';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '🌞' : '🌓';
         });
+
+        // 检查系统主题偏好
+        if (!savedTheme) {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (prefersDark) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '🌞';
+            }
+        }
     </script>
 </body>
 </html>
