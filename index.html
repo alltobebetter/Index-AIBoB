@@ -421,6 +421,13 @@
         .theme-toggle:hover {
             transform: scale(1.1);
         }
+
+        /* 添加移动端媒体查询 */
+        @media (max-width: 768px) {
+            .theme-toggle {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -553,28 +560,48 @@
         // 主题切换功能
         const themeToggle = document.getElementById('themeToggle');
         
-        // 检查本地存储中的主题设置
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            themeToggle.textContent = savedTheme === 'dark' ? '🌞' : '🌓';
-        }
+        // 检查是否是移动设备
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        if (isMobile) {
+            // 移动端：跟随系统主题
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
             
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            themeToggle.textContent = newTheme === 'dark' ? '🌞' : '🌓';
-        });
-
-        // 检查系统主题偏好
-        if (!savedTheme) {
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (prefersDark) {
+            // 初始设置
+            if (prefersDark.matches) {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = '🌞';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+            
+            // 监听系统主题变化
+            prefersDark.addEventListener('change', (e) => {
+                document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+            });
+        } else {
+            // 桌面端：保持原有的手动切换逻辑
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                themeToggle.textContent = savedTheme === 'dark' ? '🌞' : '🌓';
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                themeToggle.textContent = newTheme === 'dark' ? '🌞' : '🌓';
+            });
+
+            // 检查系统主题偏好（仅在首次访问时）
+            if (!savedTheme) {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (prefersDark) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    themeToggle.textContent = '🌞';
+                }
             }
         }
     </script>
