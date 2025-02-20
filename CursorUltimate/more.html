@@ -28,6 +28,14 @@
             background-clip: text;
             color: transparent;
             font-weight: bold;
+            text-decoration: none;
+            transition: background-position 0.3s ease;
+            background-size: 200% 200%;
+        }
+        .gradient-text:hover {
+            animation: gradientMove 2s linear infinite;
+            text-decoration: none;
+            color: transparent;
         }
         .download-link {
             display: inline-block;
@@ -164,7 +172,7 @@
                 </defs>
                 <circle cx="128" cy="128" r="120" fill="url(#grad)" />
             </svg>
-            <h1 class="mt-4 gradient-text"><i>CursorUltimate</i></h1>
+            <h1 class="mt-4"><a href="https://www.aibob.click/CursorUltimate/" class="gradient-text"><i>CursorUltimate</i></a></h1>
             <p class="lead">🚀 让您的 Cursor 体验更进一步</p>
             <p><a href="https://www.aibob.click/CursorUltimate/CursorUltimate.exe" class="download-link">立即下载</a></p>
             <div class="gradient-link-container">
