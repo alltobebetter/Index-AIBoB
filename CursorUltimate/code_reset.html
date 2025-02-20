@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>机器码重置脚本 - CursorUltimate</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgdmlld0JveD0iMCAwIDI1NiAyNTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojRkY2OUI0O3N0b3Atb3BhY2l0eToxIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQkZGRjtzdG9wLW9wYWNpdHk6MSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMjgiIHI9IjEyMCIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4=">
+    <link href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .logo-container {
+            margin: 2rem 0;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #FF69B4, #00BFFF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+        .download-link {
+            display: inline-block;
+            padding: 12px 30px;
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(45deg, #FF69B4, #00BFFF);
+            background-size: 200% 200%;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: gradientMove 2s ease infinite;
+        }
+        .download-link:hover {
+            color: white;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        .gradient-link-container {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .gradient-link {
+            background: linear-gradient(90deg, var(--start-color), var(--end-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            position: relative;
+            padding: 2px 6px;
+            transition: all 0.3s ease;
+        }
+        .gradient-link:hover {
+            background: none;
+            color: #FF69B4;
+        }
+        .gradient-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--start-color), var(--end-color));
+            transition: width 0.3s ease;
+        }
+        .gradient-link:hover::after {
+            width: 100%;
+        }
+        .gradient-link.current-page {
+            border: 1px dashed #FF69B4;
+            border-radius: 4px;
+        }
+        .gradient-separator {
+            background: linear-gradient(90deg, var(--start-color), var(--end-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0 8px;
+        }
+        .code-container {
+            position: relative;
+            margin: 2rem 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(to right, rgba(255,105,180,0.1), rgba(0,191,255,0.1));
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid #eee;
+        }
+        .code-title {
+            color: #FF69B4;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .copy-button {
+            background: linear-gradient(45deg, #FF69B4, #00BFFF);
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .copy-button:hover {
+            box-shadow: 0 2px 8px rgba(255,105,180,0.3);
+            transform: translateY(-1px);
+        }
+        .copy-button.copied {
+            background: #47B39C;
+        }
+        .code-content {
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: Consolas, Monaco, 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center logo-container animate__animated animate__fadeIn">
+            <svg width="128" height="128" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FF69B4;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#00BFFF;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <circle cx="128" cy="128" r="120" fill="url(#grad)" />
+            </svg>
+            <h1 class="mt-4 gradient-text"><i>CursorUltimate</i></h1>
+            <p class="lead">🚀 让您的 Cursor 体验更进一步</p>
+            <p><a href="https://www.aibob.click/CursorUltimate/CursorUltimate.exe" class="download-link">立即下载</a></p>
+            <div class="gradient-link-container">
+                <a href="code_reset.html" class="gradient-link current-page" style="--start-color: #FF69B4; --end-color: #FF9B8C">机器码重置脚本</a>
+                <span class="gradient-separator" style="--start-color: #FF9B8C; --end-color: #FFC154">/</span>
+                <a href="https://github.com/alltobebetter/Cursor-Auto-Renew-Ultimate" class="gradient-link" style="--start-color: #FFC154; --end-color: #47B39C">Github</a>
+                <span class="gradient-separator" style="--start-color: #47B39C; --end-color: #00BFFF">/</span>
+                <a href="more.html" class="gradient-link" style="--start-color: #00BFFF; --end-color: #FF8CC4">更多Cursor相关项目</a>
+                <span class="gradient-separator" style="--start-color: #FF8CC4; --end-color: #FF69B4">/</span>
+                <a href="pool.html" class="gradient-link" style="--start-color: #FF69B4; --end-color: #00BFFF">cursor帐号池</a>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <!-- 这里开始是机器码重置脚本页面的具体内容 -->
+        <div class="section">
+            <p class="mb-4">这是一个用于重置 Cursor 机器码的批处理脚本，请以管理员身份运行，请将以下内容保存为 <code>.bat</code> 文件后运行：</p>
+            
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">reset_machine_code.bat</span>
+                    <button class="copy-button" onclick="copyCode(this)">复制代码</button>
+                </div>
+                <div class="code-content">@echo off
+setlocal EnableDelayedExpansion
+
+:: Set configuration file path
+set "STORAGE_FILE=%APPDATA%\Cursor\User\globalStorage\storage.json"
+
+echo Starting script...
+echo Target file path: %STORAGE_FILE%
+
+:: Generate random IDs in correct format
+:: Generate machineId (40-character hex)
+powershell -Command "$bytes = New-Object Byte[] 32; (New-Object Security.Cryptography.RNGCryptoServiceProvider).GetBytes($bytes); -join ($bytes | ForEach-Object { $_.ToString('x2') })" > "%TEMP%\guid1.txt"
+if errorlevel 1 goto :error
+set /p NEW_MACHINE_ID=<"%TEMP%\guid1.txt"
+
+:: Generate macMachineId (40-character hex)
+powershell -Command "$bytes = New-Object Byte[] 32; (New-Object Security.Cryptography.RNGCryptoServiceProvider).GetBytes($bytes); -join ($bytes | ForEach-Object { $_.ToString('x2') })" > "%TEMP%\guid2.txt"
+if errorlevel 1 goto :error
+set /p NEW_MAC_MACHINE_ID=<"%TEMP%\guid2.txt"
+
+:: Generate sqmId (UUID with braces)
+powershell -Command "$guid = [guid]::NewGuid(); '{' + $guid.ToString().ToUpper() + '}'" > "%TEMP%\guid3.txt"
+if errorlevel 1 goto :error
+set /p NEW_SQM_ID=<"%TEMP%\guid3.txt"
+
+:: Generate devDeviceId (standard UUID)
+powershell -Command "[guid]::NewGuid().ToString()" > "%TEMP%\guid4.txt"
+if errorlevel 1 goto :error
+set /p NEW_DEV_DEVICE_ID=<"%TEMP%\guid4.txt"
+
+:: Clean up temporary files
+del "%TEMP%\guid1.txt" "%TEMP%\guid2.txt" "%TEMP%\guid3.txt" "%TEMP%\guid4.txt"
+
+:: Create backup
+if exist "%STORAGE_FILE%" (
+    copy "%STORAGE_FILE%" "%STORAGE_FILE%.backup_%date:~0,4%%date:~5,2%%date:~8,2%_%time:~0,2%%time:~3,2%%time:~6,2%" >nul
+)
+
+:: Create and execute update script
+(
+    echo $ErrorActionPreference = 'Stop'
+    echo try {
+    echo     $json = Get-Content '%STORAGE_FILE%' -Raw
+    echo     $json = $json -replace '"telemetry\.machineId"\s*:\s*"[^"]*"', '"telemetry.machineId": "%NEW_MACHINE_ID%"'
+    echo     $json = $json -replace '"telemetry\.macMachineId"\s*:\s*"[^"]*"', '"telemetry.macMachineId": "%NEW_MAC_MACHINE_ID%"'
+    echo     $json = $json -replace '"telemetry\.sqmId"\s*:\s*"[^"]*"', '"telemetry.sqmId": "%NEW_SQM_ID%"'
+    echo     $json = $json -replace '"telemetry\.devDeviceId"\s*:\s*"[^"]*"', '"telemetry.devDeviceId": "%NEW_DEV_DEVICE_ID%"'
+    echo     $json ^| Set-Content '%STORAGE_FILE%' -NoNewline
+    echo } catch {
+    echo     Write-Host "Error: $($_.Exception.Message)"
+    echo     exit 1
+    echo }
+) > "%TEMP%\update_json.ps1"
+
+powershell -ExecutionPolicy Bypass -File "%TEMP%\update_json.ps1"
+if errorlevel 1 (
+    del "%TEMP%\update_json.ps1"
+    goto :error
+)
+
+del "%TEMP%\update_json.ps1"
+
+echo Operation completed successfully!
+goto :end
+
+:error
+echo Script execution error!
+echo Please make sure Cursor editor is closed and you have sufficient file access permissions.
+
+:end
+pause</div>
+            </div>
+        </div>
+
+        <script>
+            function copyCode(button) {
+                const codeContent = button.parentElement.nextElementSibling.textContent;
+                navigator.clipboard.writeText(codeContent).then(() => {
+                    button.textContent = '复制成功！';
+                    button.classList.add('copied');
+                    setTimeout(() => {
+                        button.textContent = '复制代码';
+                        button.classList.remove('copied');
+                    }, 2000);
+                });
+            }
+        </script>
+    </div>
+
+    <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CursorUltimate</title>
+    <title>更多Cursor相关项目 - CursorUltimate</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgdmlld0JveD0iMCAwIDI1NiAyNTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojRkY2OUI0O3N0b3Atb3BhY2l0eToxIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQkZGRjtzdG9wLW9wYWNpdHk6MSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMjgiIHI9IjEyMCIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4=">
     <link href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/animate.css/4.1.1/animate.min.css" rel="stylesheet">
@@ -57,62 +57,6 @@
                 background-position: 0% 50%;
             }
         }
-        .notice {
-            margin: 2rem 0;
-            padding: 1.5rem;
-            background: linear-gradient(to right, rgba(255,105,180,0.05), rgba(0,191,255,0.05));
-            border-radius: 12px;
-            line-height: 1.8;
-            color: #555;
-        }
-        .notice strong {
-            color: #FF69B4;
-            font-weight: 600;
-        }
-        .feature-item {
-            margin: 1.5rem 0;
-            padding-left: 1rem;
-            border-left: 3px solid #007bff;
-            transition: transform 0.3s ease;
-        }
-        .feature-item:hover {
-            transform: translateX(5px);
-        }
-        .milk-tea-img {
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        .section {
-            margin: 3rem 0;
-            padding: 0 1rem;
-        }
-        .list-item {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #eee;
-        }
-        .list-item:last-child {
-            border-bottom: none;
-        }
-        .qa-item {
-            margin: 1.5rem 0;
-            padding-left: 1rem;
-            border-left: 3px solid #00BFFF;
-        }
-        .disclaimer {
-            margin: 3rem 0;
-            padding: 1.5rem;
-            border: 2px dashed #ccc;
-            border-radius: 8px;
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-        code {
-            background: #f1f1f1;
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
-            color: #FF69B4;
-        }
         .gradient-link-container {
             margin-top: 10px;
             font-size: 14px;
@@ -124,7 +68,7 @@
             color: transparent;
             text-decoration: none;
             position: relative;
-            padding-bottom: 2px;
+            padding: 2px 6px;
             transition: all 0.3s ease;
         }
         .gradient-link:hover {
@@ -144,12 +88,67 @@
         .gradient-link:hover::after {
             width: 100%;
         }
+        .gradient-link.current-page {
+            border: 1px dashed #FF69B4;
+            border-radius: 4px;
+        }
         .gradient-separator {
             background: linear-gradient(90deg, var(--start-color), var(--end-color));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin: 0 8px;
+        }
+        .project-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .project-title {
+            color: #FF69B4;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            font-size: 1.25rem;
+        }
+        .project-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+        .project-link {
+            display: inline-block;
+            color: #00BFFF;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+        .project-link:hover {
+            color: #FF69B4;
+        }
+        .project-tag {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background: linear-gradient(45deg, rgba(255,105,180,0.1), rgba(0,191,255,0.1));
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #FF69B4;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .project-item {
+            margin-bottom: 2.5rem;
+            padding-left: 1rem;
+            border-left: 3px solid #FF69B4;
         }
     </style>
 </head>
@@ -173,7 +172,7 @@
                 <span class="gradient-separator" style="--start-color: #FF9B8C; --end-color: #FFC154">/</span>
                 <a href="https://github.com/alltobebetter/Cursor-Auto-Renew-Ultimate" class="gradient-link" style="--start-color: #FFC154; --end-color: #47B39C">Github</a>
                 <span class="gradient-separator" style="--start-color: #47B39C; --end-color: #00BFFF">/</span>
-                <a href="more.html" class="gradient-link" style="--start-color: #00BFFF; --end-color: #FF8CC4">更多Cursor相关项目</a>
+                <a href="more.html" class="gradient-link current-page" style="--start-color: #00BFFF; --end-color: #FF8CC4">更多Cursor相关项目</a>
                 <span class="gradient-separator" style="--start-color: #FF8CC4; --end-color: #FF69B4">/</span>
                 <a href="pool.html" class="gradient-link" style="--start-color: #FF69B4; --end-color: #00BFFF">cursor帐号池</a>
             </div>
@@ -181,85 +180,55 @@
 
         <hr class="my-5">
 
-        <div class="notice">
-            <strong>运行时请以管理员权限运行，建议您开启全局代理使用，否则可能无法使用本项目</strong>。此项目将配置文件整合，因此域名和服务都是作者自费购买，以及我们移除了多半广告内容，如果有条件或者有问题的同学可以请我喝杯奶茶（多少都可以）
-        </div>
-
-        <div class="text-center my-5">
-            <img src="https://i.gyazo.com/db0c56a48451eb30f9ab2c58ad46fffe.png" alt="一杯奶茶" class="milk-tea-img" style="max-width: 400px; width: 100%;">
-            <p class="text-muted mt-2"><em>请我喝奶茶</em></p>
-        </div>
-
-        <div class="section">
-            <h2 class="gradient-text">功能特点</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="feature-item">
-                        <h5>🔄 自动化注册流程</h5>
-                        <p>简化您的注册体验</p>
-                    </div>
+        <!-- 这里开始是更多Cursor相关项目页面的具体内容 -->
+        <div class="section">            
+            <div class="project-item">
+                <h3 class="project-title">Cursor-Auto-Renew-Ultimate</h3>
+                <div class="mb-2">
+                    <span class="project-tag">自动续期</span>
+                    <span class="project-tag">本项目</span>
                 </div>
-                <div class="col-md-6">
-                    <div class="feature-item">
-                        <h5>🔑 智能机器码重置</h5>
-                        <p>快速重置您的机器码</p>
-                    </div>
+                <p class="project-description">
+                    这是一个用于自动续期 Cursor 的工具，无需配置，能集合注册登录以及重置机器码于一身，一般来说只需要1分钟即可执行完毕。
+                </p>
+                <a href="https://github.com/alltobebetter/Cursor-Auto-Renew-Ultimate" class="project-link">查看详情 →</a>
+            </div>
+
+            <div class="project-item">
+                <h3 class="project-title">Cursor</h3>
+                <div class="mb-2">
+                    <span class="project-tag">开发工具</span>
                 </div>
-                <div class="col-md-6">
-                    <div class="feature-item">
-                        <h5>🌐 支持临时邮箱验证</h5>
-                        <p>便捷的邮箱验证流程</p>
-                    </div>
+                <p class="project-description">
+                    Cursor 编辑器 Github 项目。
+                </p>
+                <a href="https://github.com/getcursor/cursor" class="project-link">查看详情 →</a>
+            </div>
+
+            <div class="project-item">
+                <h3 class="project-title">cursor-auto-free</h3>
+                <div class="mb-2">
+                    <span class="project-tag">资源</span>
+                    <span class="project-tag">开源项目</span>
                 </div>
-                <div class="col-md-6">
-                    <div class="feature-item">
-                        <h5>🛡️ 内置 Turnstile 验证处理</h5>
-                        <p>安全可靠的验证机制</p>
-                    </div>
+                <p class="project-description">
+                    一个用于自动获取 Cursor 免费账号的工具，支持多账号管理，自动检测过期时间，并在到期前自动获取新的账号。
+                </p>
+                <a href="https://github.com/chengazhen/cursor-auto-free" class="project-link">查看详情 →</a>
+            </div>
+
+            <div class="project-item">
+                <h3 class="project-title">cursor_machine_id</h3>
+                <div class="mb-2">
+                    <span class="project-tag">机器码重置</span>
+                    <span class="project-tag">跨平台</span>
+                    <span class="project-tag">开源项目</span>
                 </div>
+                <p class="project-description">
+                    一个用于修改 Cursor 编辑器设备 ID 的跨平台工具集。支持 Windows、macOS 和 Linux 系统，提供 Python 脚本和 Shell 脚本两种实现方式，可用于解除设备锁定状态。
+                </p>
+                <a href="https://github.com/fly8888/cursor_machine_id" class="project-link">查看详情 →</a>
             </div>
-        </div>
-
-        <div class="section">
-            <h2 class="gradient-text">使用前提</h2>
-            <div class="list-item">✔️ Windows 10/11 操作系统</div>
-            <div class="list-item">✔️ 已安装 Cursor 编辑器</div>
-            <div class="list-item">✔️ 管理员权限（用于机器码重置）</div>
-        </div>
-
-        <div class="section">
-            <h2 class="gradient-text">使用说明</h2>
-            <div class="feature-item">
-                <h5>1. 以管理员身份运行</h5>
-                <div class="list-item">右键点击 <code>CursorUltimate.exe</code></div>
-                <div class="list-item">选择"以管理员身份运行"</div>
-            </div>
-            <div class="feature-item">
-                <h5>2. 选择操作模式</h5>
-                <div class="list-item">模式 1：仅重置机器码</div>
-                <div class="list-item">模式 2：完整注册流程（包含注册和重置）</div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="gradient-text">常见问题</h2>
-            <div class="qa-item">
-                <h5>Q: 为什么需要管理员权限？</h5>
-                <p>A: 重置机器码需要修改系统注册表，因此需要管理员权限。</p>
-            </div>
-            <div class="qa-item">
-                <h5>Q: 程序运行时间大约多久？</h5>
-                <p>A: 正常来讲，完整注册流程约需 1.5 分钟，仅重置机器码约需 2 秒。</p>
-            </div>
-            <div class="qa-item">
-                <h5>Q: 重置后需要做什么？</h5>
-                <p>A: 重置完成后，请完全关闭并重新启动 Cursor 编辑器。</p>
-            </div>
-        </div>
-
-        <div class="disclaimer">
-            <p>本项目基于 <a href="https://github.com/chengazhen/cursor-auto-free" target="_blank">CursorPro</a> 开发，请尊重原作者权益。</p>
-            <p class="mb-0">本程序仅供学习和研究使用，使用本程序产生的任何后果由使用者自行承担。</p>
         </div>
     </div>
 

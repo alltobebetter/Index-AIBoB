@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor帐号池 - CursorUltimate</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgdmlld0JveD0iMCAwIDI1NiAyNTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojRkY2OUI0O3N0b3Atb3BhY2l0eToxIiAvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzAwQkZGRjtzdG9wLW9wYWNpdHk6MSIgLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48Y2lyY2xlIGN4PSIxMjgiIGN5PSIxMjgiIHI9IjEyMCIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4=">
+    <link href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        /* 继承基础样式 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .logo-container {
+            margin: 2rem 0;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #FF69B4, #00BFFF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+        .download-link {
+            display: inline-block;
+            padding: 12px 30px;
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(45deg, #FF69B4, #00BFFF);
+            background-size: 200% 200%;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: gradientMove 2s ease infinite;
+        }
+        .download-link:hover {
+            color: white;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .gradient-link-container {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .gradient-link {
+            background: linear-gradient(90deg, var(--start-color), var(--end-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            position: relative;
+            padding: 2px 6px;
+            transition: all 0.3s ease;
+        }
+        .gradient-link:hover {
+            background: none;
+            color: #FF69B4;
+        }
+        .gradient-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--start-color), var(--end-color));
+            transition: width 0.3s ease;
+        }
+        .gradient-link:hover::after {
+            width: 100%;
+        }
+        .gradient-link.current-page {
+            border: 1px dashed #FF69B4;
+            border-radius: 4px;
+        }
+        .gradient-separator {
+            background: linear-gradient(90deg, var(--start-color), var(--end-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0 8px;
+        }
+
+        /* 账号池特定样式 */
+        .captcha-container {
+            margin: 2rem 0;
+            padding: 1rem 0;
+        }
+        .captcha-canvas {
+            background: linear-gradient(45deg, rgba(255,105,180,0.1), rgba(0,191,255,0.1));
+            border-radius: 8px;
+        }
+        .captcha-input-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .captcha-input {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 1.5rem;
+            border: none;
+            border-bottom: 2px solid #eee;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+        .captcha-input:focus {
+            outline: none;
+            border-bottom-color: #FF69B4;
+        }
+        .submit-btn {
+            background: linear-gradient(45deg, #FF69B4, #00BFFF);
+            color: white;
+            border: none;
+            padding: 0.6rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 200px;
+            font-size: 0.95rem;
+            margin: 0 auto;
+            display: block;
+        }
+        .submit-btn:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .result-container {
+            display: none;
+            text-align: center;
+        }
+        .result-title {
+            color: #FF69B4;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .account-info {
+            margin-bottom: 1.5rem;
+            line-height: 2;
+        }
+        .account-info p {
+            margin-bottom: 0.5rem;
+        }
+        .copy-btn {
+            background: transparent;
+            border: 2px solid #FF69B4;
+            color: #FF69B4;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 auto;
+            display: block;
+        }
+        .copy-btn:hover {
+            background: #FF69B4;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center logo-container animate__animated animate__fadeIn">
+            <svg width="128" height="128" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FF69B4;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#00BFFF;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <circle cx="128" cy="128" r="120" fill="url(#grad)" />
+            </svg>
+            <h1 class="mt-4 gradient-text"><i>CursorUltimate</i></h1>
+            <p class="lead">🚀 让您的 Cursor 体验更进一步</p>
+            <p><a href="https://www.aibob.click/CursorUltimate/CursorUltimate.exe" class="download-link">立即下载</a></p>
+            <div class="gradient-link-container">
+                <a href="code_reset.html" class="gradient-link" style="--start-color: #FF69B4; --end-color: #FF9B8C">机器码重置脚本</a>
+                <span class="gradient-separator" style="--start-color: #FF9B8C; --end-color: #FFC154">/</span>
+                <a href="https://github.com/alltobebetter/Cursor-Auto-Renew-Ultimate" class="gradient-link" style="--start-color: #FFC154; --end-color: #47B39C">Github</a>
+                <span class="gradient-separator" style="--start-color: #47B39C; --end-color: #00BFFF">/</span>
+                <a href="more.html" class="gradient-link" style="--start-color: #00BFFF; --end-color: #FF8CC4">更多Cursor相关项目</a>
+                <span class="gradient-separator" style="--start-color: #FF8CC4; --end-color: #FF69B4">/</span>
+                <a href="pool.html" class="gradient-link current-page" style="--start-color: #FF69B4; --end-color: #00BFFF">cursor帐号池</a>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <div class="captcha-container">
+            <div class="text-center mb-4">
+                <canvas id="captchaCanvas" class="captcha-canvas" width="200" height="60"></canvas>
+                <p class="text-muted mt-2"><small>验证码错误将自动刷新</small></p>
+            </div>
+            
+            <div id="inputSection">
+                <div class="captcha-input-container">
+                    <input type="text" class="captcha-input" maxlength="1" data-index="0">
+                    <input type="text" class="captcha-input" maxlength="1" data-index="1">
+                    <input type="text" class="captcha-input" maxlength="1" data-index="2">
+                    <input type="text" class="captcha-input" maxlength="1" data-index="3">
+                </div>
+                
+                <button id="submitBtn" class="submit-btn">获取账号</button>
+            </div>
+            
+            <div id="resultContainer" class="result-container">
+                <h3 class="result-title">账号信息</h3>
+                <div class="account-info">
+                    <p><strong>邮箱：</strong><span id="emailResult"></span></p>
+                    <p><strong>密码：</strong><span id="passwordResult"></span></p>
+                    <p><strong>有效期至：</strong><span id="expiryResult"></span></p>
+                </div>
+                <button id="copyBtn" class="copy-btn">复制账号信息</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 验证码相关变量
+        let captchaText = '';
+        const canvas = document.getElementById('captchaCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // 生成随机验证码
+        function generateCaptcha() {
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            captchaText = '';
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 绘制渐变背景
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, 'rgba(255,105,180,0.1)');
+            gradient.addColorStop(1, 'rgba(0,191,255,0.1)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 生成验证码文字
+            ctx.font = 'bold 32px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            for(let i = 0; i < 4; i++) {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                captchaText += char;
+                
+                // 随机颜色
+                const hue = Math.random() * 360;
+                ctx.fillStyle = `hsl(${hue}, 70%, 50%)`;
+                
+                // 随机旋转
+                const rotation = (Math.random() - 0.5) * 0.3;
+                ctx.save();
+                ctx.translate(50 + i * 40, canvas.height/2);
+                ctx.rotate(rotation);
+                ctx.fillText(char, 0, 0);
+                ctx.restore();
+            }
+            
+            // 添加干扰线
+            for(let i = 0; i < 4; i++) {
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(${Math.random()*255},${Math.random()*255},${Math.random()*255},0.3)`;
+                ctx.lineWidth = 1;
+                ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                ctx.stroke();
+            }
+        }
+
+        // 初始化验证码
+        generateCaptcha();
+        
+        // 账号池数据
+        let accountPool = [];
+        let usedAccounts = new Set();
+
+        // 加载账号池数据
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                accountPool = data;
+            })
+            .catch(error => console.error('Error loading account pool:', error));
+
+        // 随机抽取一个未使用的账号
+        function getRandomAccount() {
+            const availableAccounts = accountPool.filter(account => !usedAccounts.has(account.email));
+            if (availableAccounts.length === 0) {
+                throw new Error('所有账号已被使用');
+            }
+            const randomIndex = Math.floor(Math.random() * availableAccounts.length);
+            const account = availableAccounts[randomIndex];
+            usedAccounts.add(account.email);
+            return account;
+        }
+
+        // 验证码输入框处理
+        const inputs = document.querySelectorAll('.captcha-input');
+        
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', function(e) {
+                // 转换为大写
+                this.value = this.value.toUpperCase();
+                
+                // 自动跳转到下一个输入框
+                if (this.value && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+
+            input.addEventListener('keydown', function(e) {
+                // 处理退格键
+                if (e.key === 'Backspace' && !this.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        // 提交验证码
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const inputValue = Array.from(inputs).map(input => input.value).join('');
+            if (inputValue === captchaText) {
+                try {
+                    const account = getRandomAccount();
+                    document.getElementById('emailResult').textContent = account.email;
+                    document.getElementById('passwordResult').textContent = account.password;
+                    document.getElementById('expiryResult').textContent = account.create_time;
+                    
+                    // 隐藏输入区域，显示结果
+                    document.getElementById('inputSection').style.display = 'none';
+                    document.getElementById('resultContainer').style.display = 'block';
+                    
+                    // 存储使用记录到localStorage
+                    const now = new Date().getTime();
+                    localStorage.setItem('lastAccountFetch', now);
+                    
+                    // 禁用提交按钮24小时
+                    this.disabled = true;
+                    setTimeout(() => {
+                        this.disabled = false;
+                    }, 24 * 60 * 60 * 1000);
+                } catch (error) {
+                    alert(error.message);
+                }
+            } else {
+                alert('验证码错误，请重试');
+                generateCaptcha();
+                // 清空并聚焦第一个输入框
+                inputs.forEach(input => input.value = '');
+                inputs[0].focus();
+            }
+        });
+
+        // 复制账号信息
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const email = document.getElementById('emailResult').textContent;
+            const password = document.getElementById('passwordResult').textContent;
+            const expiry = document.getElementById('expiryResult').textContent;
+            const text = `邮箱：${email}\n密码：${password}\n有效期至：${expiry}`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                this.textContent = '复制成功！';
+                setTimeout(() => {
+                    this.textContent = '复制账号信息';
+                }, 2000);
+            });
+        });
+
+        // 检查是否在24小时冷却期
+        const lastFetch = localStorage.getItem('lastAccountFetch');
+        if (lastFetch) {
+            const now = new Date().getTime();
+            const timeDiff = now - parseInt(lastFetch);
+            if (timeDiff < 24 * 60 * 60 * 1000) {
+                document.getElementById('submitBtn').disabled = true;
+                setTimeout(() => {
+                    document.getElementById('submitBtn').disabled = false;
+                }, 24 * 60 * 60 * 1000 - timeDiff);
+            }
+        }
+    </script>
+</body>
+</html> 
